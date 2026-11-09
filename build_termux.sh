@@ -2,7 +2,7 @@
 # MYRA AI — Termux build helper
 set -e
 pkg update -y
-pkg install -y openjdk-17 gradle aapt2 git unzip wget
+pkg install -y openjdk-21 gradle aapt2 git unzip wget
 
 echo "== Gradle version (AGP 8.5.2 needs >= 8.7) =="
 gradle --version | head -8
