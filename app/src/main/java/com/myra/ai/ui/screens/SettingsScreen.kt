@@ -70,7 +70,7 @@ fun SettingsScreen(vm: MainViewModel) {
             OutlinedTextField(d.apiKey, { upd(d.copy(apiKey = it)) }, Modifier.fillMaxWidth(), label = { Text("Gemini API Key") },
                 singleLine = true, visualTransformation = PasswordVisualTransformation())
             OutlinedTextField(d.model, { upd(d.copy(model = it)) }, Modifier.fillMaxWidth(), label = { Text("Model") }, singleLine = true)
-            Pick("Preset", d.model, listOf("gemini-2.5-flash", "gemini-2.5-pro", "gemini-2.5-flash-lite")) { upd(d.copy(model = it)) }
+            Pick("Preset", d.model, listOf("gemini-3.8-flash", "gemini-2.5-pro", "gemini-3.5-flash-lite")) { upd(d.copy(model = it)) }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedButton(onClick = { vm.test(d) }) { Text("Test connection") }
             }

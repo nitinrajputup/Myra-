@@ -66,7 +66,7 @@ class Assistant(private val app: MyraApplication) {
     }
 
     suspend fun test(s: MyraSettings): String =
-        gemini.generate(s.apiKey, s.model.ifBlank { "gemini-2.5-flash" }, "Reply with the single word OK.", listOf(ChatTurn(true, "ping")))
+        gemini.generate(s.apiKey, s.model.ifBlank { "gemini-3.8-flash" }, "Reply with the single word OK.", listOf(ChatTurn(true, "ping")))
             .fold({ "✅ Connected" }, { "❌ ${it.message}" })
 
     private suspend fun systemPrompt(s: MyraSettings, agent: Agent): String {

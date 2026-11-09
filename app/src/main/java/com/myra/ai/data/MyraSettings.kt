@@ -4,7 +4,7 @@ import org.json.JSONObject
 
 data class MyraSettings(
     val apiKey: String = "",
-    val model: String = "gemini-2.5-flash",
+    val model: String = "gemini-3.8-flash",
     val instructions: String = "",
     val personality: String = "Friendly",
     val responseStyle: String = "Concise",
