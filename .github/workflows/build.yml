@@ -1,0 +1,56 @@
+name: MYRA AI APK Build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Extract Android Project ZIP
+        run: |
+          ZIP=$(find . -maxdepth 2 -iname '*.zip' | head -n 1)
+          if [ -z "$ZIP" ]; then
+            echo "Android ZIP not found"
+            exit 1
+          fi
+          mkdir -p extracted
+          unzip -o "$ZIP" -d extracted
+
+      - name: Find Gradle Project
+        run: |
+          FILE=$(find extracted -name settings.gradle -o -name settings.gradle.kts | head -n 1)
+          if [ -z "$FILE" ]; then
+            echo "Gradle project not found"
+            exit 1
+          fi
+          echo "PROJECT_DIR=$(dirname "$FILE")" >> $GITHUB_ENV
+
+      - name: Build APK
+        run: |
+          cd "$PROJECT_DIR"
+          if [ -f gradlew ]; then
+            chmod +x gradlew
+            ./gradlew assembleDebug
+          else
+            gradle assembleDebug
+          fi
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: MYRA-AI-APK
+          path: extracted/**/build/outputs/apk/debug/*.apk
